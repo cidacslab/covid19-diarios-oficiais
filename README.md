@@ -1,4 +1,16 @@
-# covid19-diarios-oficiais
+# State Logs Processing (SLP)
+
+## Setting the Environment
+
+// get from marco
+```
+conda create -n slp python=3.7
+conda activate slp
+conda install whatever
+pip install whatever
+```
+
+## Solutions
 
 pdf solution:
 https://github.com/pdfminer/pdfminer.six

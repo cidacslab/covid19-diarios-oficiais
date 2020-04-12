@@ -5,7 +5,7 @@ import pdfminer
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import TextConverter
+from pdfminer.converter import TextConverter, PDFPageAggregator
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfdevice import PDFDevice
@@ -23,8 +23,10 @@ with open('data/ba/01/20200107.pdf', 'rb') as in_file:
 
     # create a PDF resource manager object that stores shared resources
     rsrcmgr = PDFResourceManager()
+    # set parameters for analysis
+    laparams = LAParams()
     # create a pdf device object
-    device = PDFDevice(rsrcmgr)
+    device = PDFPageAggregator(rsrcmgr, laparams=laparams)
     # create a pdf interpreter object
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     # process each page contained in the document
@@ -32,5 +34,10 @@ with open('data/ba/01/20200107.pdf', 'rb') as in_file:
         # process the page
         interpreter.process_page(page)
         # get the entire text of the page?
-        
-
+        # get the text of an entire page.
+        layout = device.get_result()
+        #
+        for element in layout:
+            # we don't want some elements
+            if not type(element).__name__ in ['LTFigure', 'LTRect', 'LTLine', 'LTCurve']:
+                print( element.get_text())

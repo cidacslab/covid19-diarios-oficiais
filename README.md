@@ -2,12 +2,17 @@
 
 ## Setting the Environment
 
-// get from marco
 ```
 conda create -n slp python=3.7
 conda activate slp
-conda install whatever
+conda install -c conda-forge spacy
 pip install pdfminer
+
+
+# installing the portuguese spacy model
+
+pip apt_core_news_sm
+python -m spacy download pt_core_news_sm
 ```
 
 ## Solutions

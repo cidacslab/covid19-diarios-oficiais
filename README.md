@@ -8,7 +8,6 @@ conda activate slp
 conda install -c conda-forge spacy
 pip install pdfminer
 
-
 # installing the portuguese spacy model
 
 pip apt_core_news_sm

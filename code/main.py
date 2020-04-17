@@ -22,7 +22,10 @@ class Document:
     def addPage(self, sentences, page=None):
         # TODO: implement this function
         return 0
-    
+
+    # TODO function to return an interator to deal with the senteces
+
+    # TODO function to return an iterator to deal with the pages
 
     def getAllSenteces(self):
         return self.sentences
@@ -40,7 +43,6 @@ def textToSentences(text):
 
 sentences = textToSentences("Esse e um exemplo de texto. Esse e outro exemplo de texto.")
 assert(sentences == ['Esse e um exemplo de texto.', 'Esse e outro exemplo de texto.'])
-
 
 def fromPDFToDocument(path):
     with open(path, 'rb') as in_file:

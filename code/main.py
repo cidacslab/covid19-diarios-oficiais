@@ -20,7 +20,6 @@ class Document:
         self.pages = []
     
     def addPage(self, sentences):
-        # TODO: implement this function
         self.pages.append(sentences)
         return 0
 
@@ -32,13 +31,11 @@ class Document:
     def getNumPages(self):
         return len(self.pages)
 
-    # TODO function to return an iterator to deal with the pages
     def getAllSentences(self):
         sentences = []
         for page in self.pages:
             for sentence in page:
                 sentences.append(sentence)
-
         return sentences
 
     def getNumSentences(self):

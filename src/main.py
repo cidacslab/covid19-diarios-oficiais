@@ -1,3 +1,7 @@
+#from match import Mach
+import match
+from document import Document
+
 from io import StringIO
 
 import pdfminer
@@ -10,37 +14,6 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfdevice import PDFDevice
 
-
-
-class Document:
-    def __init__(self, doc_id):
-        self.pages = 0
-        # using an empty dict to store the sentences
-        self.doc_id = doc_id
-        self.pages = []
-    
-    def addPage(self, sentences):
-        self.pages.append(sentences)
-        return 0
-
-    ## TODO: instead of a list this should return an iterator in the future
-    def getPage(self, page_number):
-        # -1 here because the data structure is zero indexed and we want to mantain coherence
-        return self.pages[page_number - 1]
-
-    def getNumPages(self):
-        return len(self.pages)
-
-    def getAllSentences(self):
-        sentences = []
-        for page in self.pages:
-            for sentence in page:
-                sentences.append(sentence)
-        return sentences
-
-    def getNumSentences(self):
-        # TODO: do a proper job here
-        return len(self.getAllSentences())
 
 def textToSentences(text):
     import spacy
@@ -101,18 +74,9 @@ def fromPDFToDocument(path):
         return document_obj
 
 tt = fromPDFToDocument('data/ba/01/20200107.pdf')
-
 assert(tt.getNumPages() == 64)
 assert(tt.getNumSentences() == 9709)
 
-class Match:
-    def __init__(self, document_id, page, document_link, state, matched_text, date):
-        self.document_id = document_id
-        self.page = page
-        self.document_link = document_link
-        self.state = state
-        self.matched_text = matched_text
-        self.date = date
 
 # TODO: complete the search function
 ## Search function

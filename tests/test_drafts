@@ -1,9 +1,0 @@
-## testing text to sentence func
-sentences = textToSentences("Esse e um exemplo de texto. Esse e outro exemplo de texto.")
-assert(sentences == ['Esse e um exemplo de texto.', 'Esse e outro exemplo de texto.'])
-
-
-## testing fromPDFToDocument func
-tt = fromPDFToDocument('data/ba/01/20200107.pdf')
-assert(tt.getNumPages() == 64)
-assert(tt.getNumSentences() == 9709)

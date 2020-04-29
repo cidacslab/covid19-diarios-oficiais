@@ -23,3 +23,5 @@ RUN jupyter contrib nbextension install --user
 RUN pip install -U green==3.1.0
 # Project-specific deps
 RUN pip install -r requirements.txt
+# spacy model
+RUN python -m spacy download pt_core_news_sm 

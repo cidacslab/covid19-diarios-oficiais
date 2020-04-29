@@ -25,9 +25,6 @@ def textToSentences(text):
     return [str(sent) for sent in list(doc.sents)]
     #return list(doc.sents)
 
-sentences = textToSentences("Esse e um exemplo de texto. Esse e outro exemplo de texto.")
-assert(sentences == ['Esse e um exemplo de texto.', 'Esse e outro exemplo de texto.'])
-
 def fromPDFToDocument(path):
     with open(path, 'rb') as in_file:
         # parse file
@@ -73,12 +70,6 @@ def fromPDFToDocument(path):
         # returning the document obj
         return document_obj
 
-tt = fromPDFToDocument('data/ba/01/20200107.pdf')
-assert(tt.getNumPages() == 64)
-assert(tt.getNumSentences() == 9709)
-
-
-# TODO: complete the search function
 ## Search function
 def search_term(document_list, query):
     return 0

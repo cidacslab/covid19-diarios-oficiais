@@ -1,6 +1,2 @@
+*.pyc
 full-data/
-feedback/
-lightning-talk/
-poster/
-proposal/
-INSTRUCTIONS.pdf

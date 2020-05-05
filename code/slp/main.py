@@ -1,8 +1,7 @@
 #from match import Mach
-import match
-from document import Document
-from search import Search
-from pdf_processor import PDFProcessor
+from .document import Document
+from .search import Search
+from .pdf_processor import PDFProcessor
 
 from io import StringIO
 

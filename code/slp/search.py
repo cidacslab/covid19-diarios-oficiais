@@ -1,4 +1,4 @@
-from document import Document
+from .document import Document
 from whoosh.fields import Schema, TEXT, ID, STORED, DATETIME
 from whoosh.analysis import StemmingAnalyzer
 
@@ -13,10 +13,7 @@ class Search:
                 page=STORED(), # we don't wanna searchfor page, only for doc
                 sentence=TEXT()
             )
-        ##
-         
-    ''' here doc is of time Document
-    '''
+    
     def index_document(self, doc):
         print(doc)
 

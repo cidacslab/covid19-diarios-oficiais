@@ -35,7 +35,7 @@ class Search:
                 state = doc.state,
                 page = str(k+1), 
                 date = doc.date,
-                sentence = s
+                sentence = ' '.join(s)
             )
             print('indexed: (state->', doc.state, '), (page->', k+1, '), (date->', doc.date, ')')
             #print('sentence: ', s)
@@ -50,6 +50,7 @@ class Search:
             print('Searching term: ', term)
             # this limits the number of matches = 10
             results = searcher.search(query)
+            print('-- number of hits: ', len(results))
             for hit in results:
-                print('hit -> ', hit.matched_terms())
+                print('-- -- hit -> ', hit)
 

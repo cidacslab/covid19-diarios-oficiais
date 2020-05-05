@@ -25,7 +25,7 @@ class TestIE(unittest.TestCase):
     def test_fromPDFToDocument(self):
         pdfproc = PDFProcessor()
         ## testing fromPDFToDocument func
-        tt = pdfproc.pdf_to_document('data/test.pdf')
+        tt = pdfproc.pdf_to_document('data/test.pdf', 'ba', '2019-12-04')
         # this document has 64 pagesj
         self.assertEqual(tt.getNumPages(), 5)
         # this document has 9709 sentences

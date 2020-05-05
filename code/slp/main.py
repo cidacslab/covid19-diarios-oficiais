@@ -5,32 +5,13 @@ from pdf_processor import PDFProcessor
 
 from io import StringIO
 
+# convert pdf to doc
 pdfproc = PDFProcessor()
 doc = pdfproc.pdf_to_document('data/test.pdf', 'ba', '2019-12-04')
 
+# indexing part [WORKING]
 search = Search()
 search.index_document(doc)
 
-
-## Search function
-def search_term(document_list, query):
-    return 0
-    # for each document in the list
-
-    # for each sentence in each document
-
-    # if query matches the sentence
-
-    # create a match object
-    ## the object should have:
-    ## document id
-    ## sentence matched + sentences around for manual review
-    ## page matched
-    ## day matched
-    ## link to the document
-    ## state matched
-
-    ## such information should come from the file structure itself
-
-
-
+# search part
+search.search_term('sempre')

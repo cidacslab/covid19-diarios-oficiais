@@ -29,5 +29,5 @@ class TestIE(unittest.TestCase):
         # this document has 64 pagesj
         self.assertEqual(tt.getNumPages(), 5)
         # this document has 9709 sentences
-        self.assertEqual(tt.getNumSentences(), 171)
+        self.assertEqual(tt.getNumSentences(), 172)
 

@@ -6,18 +6,7 @@ from pdf_processor import PDFProcessor
 # see https://github.com/CleanCut/green#unit-test-structure-tutorial
 import unittest
 
-class TestExamples(unittest.TestCase):
-    def test_equals(self):
-        "Example test using equality"
-        self.assertEqual(2, 2)
-
-    '''
-    def test_fail(self):
-        "this test should always fail."
-        "comment out"
-        self.assertEqual(1,0)
-    '''
-
+print('Runnint tests')
 
 ''' this class is going to house NLP related tests
 '''
@@ -34,16 +23,12 @@ class TestNLP(unittest.TestCase):
 '''
 class TestIE(unittest.TestCase):
     def test_fromPDFToDocument(self):
+        print('testing pdf processing') 
         pdfproc = PDFProcessor()
         ## testing fromPDFToDocument func
         tt = pdfproc.pdf_to_document('data/test.pdf')
         # this document has 64 pagesj
         self.assertEqual(tt.getNumPages(), 5)
         # this document has 9709 sentences
-        # self.assertEqual(tt.getNumSentences() == 9709)
-        print(tt.getNumSentences())
-
-''' TODO: add a searching classs 
-'''
-
+        self.assertEqual(tt.getNumSentences() == 171)
 

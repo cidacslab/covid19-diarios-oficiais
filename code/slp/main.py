@@ -1,25 +1,17 @@
 #from match import Mach
 import match
 from document import Document
+from search import Search
 from pdf_processor import PDFProcessor
 
 from io import StringIO
 
-import pdfminer
 
-from pdfminer.pdfparser import PDFParser
-from pdfminer.pdfdocument import PDFDocument
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import TextConverter, PDFPageAggregator
-from pdfminer.layout import LAParams
-from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
-from pdfminer.pdfdevice import PDFDevice
+#pdfproc = PDFProcessor()
+#doc = pdfproc.pdf_to_document('data/test.pdf') 
 
-
-pdfproc = PDFProcessor()
-doc = pdfproc.pdf_to_document('data/test.pdf') 
-
-
+search = Search()
+search.index_document('data/test.pdf')
 
 
 ## Search function

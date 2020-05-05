@@ -15,5 +15,5 @@ install:
   - docker build -f Dockerfile -t "ling-539/final-project:latest" .
 script:
   # Run tests
-  - docker run -it "ling-539/final-project:latest" python tests/tests.py
+  - docker run -it "ling-539/final-project:latest" python -m unittest tests/tests.py
 

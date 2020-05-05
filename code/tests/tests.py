@@ -23,7 +23,6 @@ class TestNLP(unittest.TestCase):
 '''
 class TestIE(unittest.TestCase):
     def test_fromPDFToDocument(self):
-        print('testing pdf processing') 
         pdfproc = PDFProcessor()
         ## testing fromPDFToDocument func
         tt = pdfproc.pdf_to_document('data/test.pdf')

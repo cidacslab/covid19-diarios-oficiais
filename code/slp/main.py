@@ -1,16 +1,15 @@
 #from match import Mach
-from .document import Document
-from .search import Search
-from .pdf_processor import PDFProcessor
+from document import Document
+from search import Search
+from pdf_processor import PDFProcessor
 
 from io import StringIO
 
-
-#pdfproc = PDFProcessor()
-#doc = pdfproc.pdf_to_document('data/test.pdf') 
+pdfproc = PDFProcessor()
+doc = pdfproc.pdf_to_document('data/test.pdf', 'ba', '2019-12-04')
 
 search = Search()
-search.index_document('data/test.pdf')
+search.index_document(doc)
 
 
 ## Search function

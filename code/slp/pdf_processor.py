@@ -20,7 +20,8 @@ class PDFProcessor:
         # return sentences
         return [str(sent) for sent in list(doc.sents)]
         
-    def pdf_to_document(self, path):
+
+    def pdf_to_document(self, path, state, date):
         with open(path, 'rb') as in_file:
             # parse file
             parser = PDFParser(in_file)
@@ -38,7 +39,7 @@ class PDFProcessor:
             # create a pdf interpreter object
             interpreter = PDFPageInterpreter(rsrcmgr, device)
             # declare the document
-            document_obj = Document('fakeid')
+            document_obj = Document(state, date)
             # process each page contained in the document
             n_pages = 1
             for page in PDFPage.create_pages(document):

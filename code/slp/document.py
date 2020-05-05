@@ -1,10 +1,13 @@
 
 
 class Document:
-    def __init__(self, doc_id):
+    def __init__(self, state=None, date=None):
         self.pages = 0
-        # using an empty dict to store the sentences
-        self.doc_id = doc_id
+        # date of the document
+        self.date = date
+        # state of the document
+        self.state = state
+        
         self.pages = []
     
     def addPage(self, sentences):

@@ -1,11 +1,12 @@
 from document import Document
+from match import Match
+
 from whoosh.fields import Schema, TEXT, ID, STORED, DATETIME
 from whoosh.analysis import StemmingAnalyzer
 from whoosh import index
 from whoosh.qparser import QueryParser
 
 import os, os.path
-
 
 class Search:
     def __init__(self, index_path='default'):
@@ -52,5 +53,13 @@ class Search:
             results = searcher.search(query)
             print('-- number of hits: ', len(results))
             for hit in results:
-                print('-- -- hit -> ', hit)
+                # hit has:
+                # date
+                # page
+                # sentennce
+                # state
 
+                match = Match(hit['page'], hit['state'], hit['sentence'], hit['date'], '<link>', '<id>')
+                print(match)
+
+                # MAKE VIM RECORD THE LAST PLACE I WHERE

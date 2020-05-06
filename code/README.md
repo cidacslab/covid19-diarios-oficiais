@@ -47,8 +47,14 @@ https://flask.palletsprojects.com/en/1.1.x/
 frontend solution
 https://getbootstrap.com/
 
+graph plotting solution
+https://www.chartjs.org/
+
 ## TODO:
 
 - check the slides
 - read the doc for word2vec
 - check the second word2vec paper
+
+-- create a function to return the max date and min date.
+-- this function is going to be needed to plot the graph

@@ -81,7 +81,16 @@
         .attr('r', function(d) {
           return d.r;
         })
+      // similar to the enter element there is an exit element
+      // it filters the selection only to select elements which are bout to datums that no longer exists
+      // this allow us to handle 'orpahn' elements
+      // we can remove them from the canvas this way:
+      // circles
+      //  .exit()
+      //  .remove()
       //
+      // TRANSITIONS AND ANIMATIONS
+      
     </script>
   </body>
 </html>

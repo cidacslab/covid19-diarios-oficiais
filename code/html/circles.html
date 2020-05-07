@@ -8,7 +8,7 @@
       data = [
         {
           x: "25%",
-          y: "25%",
+          y: "50%",
           r: "5%",
           c: "red",
         },
@@ -20,7 +20,7 @@
         },
         {
           x: "75%",
-          y: "75%",
+          y: "50%",
           r: "5%",
           c: "blue",
         },
@@ -50,21 +50,19 @@
         .attr("r", function (d) {
           return d.r;
         });
-      /*
+      // creating new data
+      data[1].y = '75%'
       // adding new data
       data.push({
-        x: '20%',
-        y: '80%',
+        x: '50%',
+        y: '25%',
         r: '5%',
         c: 'magenta'})
-      // creating new data
-      data[1].x = '0%'
-      data[1].y = '0%'
       // tell d3 about the change
       var circles = canvas
         .selectAll('circle')
         .data(data);
-      // if we just want to add new elements
+      // tell d3 to add the new element
       circles
         // if you want to just update some elements you need to comment out
         // .enter and .append('')
@@ -81,10 +79,17 @@
         .attr('fill', function(d) {
           return d.c;
         })
-        .attr('r', function(d) {
-          return d.r;
+        .attr('r', 0)
+        .transition().duration(1000)
+        .attr('r', function(d){
+          return d.r
+        });
+      // tell d3 to update the green circle
+      circles
+        .transition().duration(1000)
+        .attr('cy', function(d) {
+          return d.y;
         })
-      */
       // similar to the enter element there is an exit element
       // it filters the selection only to select elements which are bout to datums that no longer exists
       // this allow us to handle 'orpahn' elements
@@ -93,7 +98,10 @@
       //  .exit()
       //  .remove()
       //
-      // TRANSITIONS AND ANIMATIONS
+      // UNIQUELY IDENTIFYING DATUMS
+      // it is possible to add unique ids to each data,
+      // and d3 can use it to detect if an element has changed or not
+    
     </script>
   </body>
 </html>

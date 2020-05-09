@@ -1,78 +1,76 @@
 <!DOCTYPE html>
-<meta charset="utf-8" />
-
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
-
-<!-- Create a div where the graph will take place -->
-<svg id="canvas"></svg>
-
-<script>
-
-// set the dimensions and margins of the graph
-var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-  width = 460 - margin.left - margin.right,
-  height = 200 - margin.top - margin.bottom;
-// append the svg object to the body of the page
-// create the svg object // I want to do that using an actual svg component
-//
-var svg = d3.select('#canvas')
-  .attr("width", width + margin.left + margin.right) // you have to set at least the width and height?
-  .attr("height", height + margin.top + margin.bottom)
-
-var xScale = d3
-  .scaleTime()
-  .domain([new Date('2020-01-01'), new Date('2020-05-01')])
-  .range([0, width])
-
-var xAxis = d3.axisBottom(xScale)
-  .ticks(d3.utcMonth)
-  .tickFormat(d3.timeFormat('%b'))
-
-svg
-  .append("g")
-  .attr("transform", "translate(0," + height + ")") // this seems to posijj
-  .call(xAxis);
-
-var yScale = d3
-  .scaleLinear()
-  .domain([0, 10])
-  .range([height, 0]);
-
-var yAxis = d3
-  .axisLeft(yScale)
-
-svg
-  .append("g")
-  .call(yAxis);
-
-// load the data
-data = d3.csv(
-  "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
-  // When reading the csv, I must format variables:
-  function (d) {
-    return { date: d3.timeParse("%Y-%m-%d")(d.date), value: d.value };
-});
-
-// Now I can use this dataset:
-// Add the line
-svg
-  .append("path")
-  .datum(data)
-  .attr("fill", "none")
-  .attr("stroke", "steelblue")
-  .attr("stroke-width", 1.5)
-  .attr(
-    "d",
-    d3
-      .line()
-      .x(function (d) {
-        return x(d.date);
-      })
-      .y(function (d) {
-        return y(d.value);
-      })
-  );
-
-alert(data)
-</script>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!-- Load d3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+<body>
+  <!-- Create a div where the graph will take place -->
+  <div style="margin:50px"><svg id="canvas"></svg></div>
+  <script>
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 460 - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
+  // select the html element to add the attributes
+  var svg = d3.select('#canvas')
+    .attr("width", width + margin.left + margin.right) // you have to set at least the width and height?
+    .attr("height", height + margin.top + margin.bottom)
+  // adding xAxis 
+  var xScale = d3
+    .scaleTime()
+    .domain([new Date('2020-01-01'), new Date('2020-05-01')])
+    .range([0, width])
+  var xAxis = d3.axisBottom(xScale)
+    .ticks(d3.utcMonth)
+    .tickFormat(d3.timeFormat('%b'))
+  // appending it to the svg object
+  svg
+    .append("g")
+    .attr("transform", "translate(0," + height + ")") // ??
+    .call(xAxis);
+  // adding yAxis 
+  var yScale = d3
+    .scaleLinear()
+    .domain([0, 10])
+    .range([height, 0]);
+  // 
+  var yAxis = d3
+    .axisLeft(yScale)
+  // add the axis to the svg
+  svg
+    .append("g")
+    .call(yAxis);
+  // load the data
+  data = d3.csv(
+    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
+    // When reading the csv, I must format variables:
+    function (d) {
+      return { date: d3.timeParse("%Y-%m-%d")(d.date), value: d.value };
+  });
+  /*
+  // Now I can use this dataset:
+  // Add the line
+  svg
+    .append("path")
+    .datum(data)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 1.5)
+    .attr(
+      "d",
+      d3
+        .line()
+        .x(function (d) {
+          return x(d.date);
+        })
+        .y(function (d) {
+          return y(d.value);
+        })
+    );
+  */
+  alert(data)
+  </script>
+</body>
+</html>

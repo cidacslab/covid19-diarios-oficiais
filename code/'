@@ -18,6 +18,31 @@
     .attr("width", width + margin.left + margin.right) 
   // you have to set at least the width and height?
     .attr("height", height + margin.top + margin.bottom)
+  // adding xAxis 
+  var xScale = d3
+    .scaleTime()
+    .domain([new Date('2020-01-01'), new Date('2020-05-01')])
+    .range([0, width])
+  var xAxis = d3.axisBottom(xScale)
+    .ticks(d3.utcMonth)
+    .tickFormat(d3.timeFormat('%b'))
+  // appending it to the svg object
+  svg
+    .append("g")
+    .attr("transform", "translate(0," + height + ")") // ??
+    .call(xAxis);
+  // adding yAxis 
+  var yScale = d3
+    .scaleLinear()
+    .domain([0, 10])
+    .range([height, 0]);
+  // 
+  var yAxis = d3
+    .axisLeft(yScale)
+  // add the axis to the svg
+  svg
+    .append("g")
+    .call(yAxis);
   // load the data
   var df = d3.csv(
     "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
@@ -25,37 +50,11 @@
     function (d) {
       return { date: d3.timeParse("%Y-%m-%d")(d.date), value: d.value };
     },
-    function (data) {
-      console.log(data)
-      // adding xAxis 
-      var xScale = d3
-        .scaleTime()
-        .domain(d3.extent(data, function(d) {return d.date}))
-        .range([0, width])
-      var xAxis = d3.axisBottom(xScale)
-        .ticks(d3.utcMonth)
-        .tickFormat(d3.timeFormat('%b'))
-      // appending it to the svg object
-      svg
-        .append("g")
-        .attr("transform", "translate(0," + height + ")") // ??
-        .call(xAxis);
-      // adding yAxis 
-      var yScale = d3
-        .scaleLinear()
-        .domain([0, d3.max(data, function(d) {return +d.value})])
-        .range([height, 0]);
-      // 
-      var yAxis = d3
-        .axisLeft(yScale)
-      // add the axis to the svg
-      svg
-        .append("g")
-        .call(yAxis);
-      // PLOTTING STUFF
+    function (error, rows) {
+      console.log(rows)
       svg
         .append("path")
-        .datum(data)
+        .datum(rows)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
@@ -64,14 +63,35 @@
           d3
             .line()
             .x(function (d) {
-              return xScale(d.date);
+              return x(d.date);
             })
             .y(function (d) {
-              return yScale(d.value);
+              return y(d.value);
             })
         );
     }
   );
+  /*
+  // Now I can use this dataset:
+  // Add the line
+  svg
+    .append("path")
+    .datum(data)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 1.5)
+    .attr(
+      "d",
+      d3
+        .line()
+        .x(function (d) {
+          return x(d.date);
+        })
+        .y(function (d) {
+          return y(d.value);
+        })
+    );
+  */
   </script>
 </body>
 </html>

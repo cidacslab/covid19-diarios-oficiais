@@ -10,14 +10,14 @@
   <div style="margin:50px"><svg id="canvas"></svg></div>
   <script>
   // set the dimensions and margins of the graph
-  var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 460 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+  var margin = { top: 20, right: 30, bottom: 30, left: 40},
+    width = 500
+    height = 200;
   // select the html element to add the attributes
   var svg = d3.select('#canvas')
     .attr("width", width + margin.left + margin.right) 
   // you have to set at least the width and height?
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", height + margin.top + margin.bottom )
   // load the data
   var df = d3.csv(
     "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
@@ -31,26 +31,27 @@
       var xScale = d3
         .scaleTime()
         .domain(d3.extent(data, function(d) {return d.date}))
-        .range([0, width])
+        .range([margin.left, width])
       var xAxis = d3.axisBottom(xScale)
-        .ticks(d3.utcMonth)
-        .tickFormat(d3.timeFormat('%b'))
+        .ticks(width/80)
+        .tickFormat(d3.timeFormat('%Y'))
       // appending it to the svg object
       svg
         .append("g")
-        .attr("transform", "translate(0," + height + ")") // ??
+        .attr("transform", "translate(0,"+ height +")") // ??
         .call(xAxis);
       // adding yAxis 
       var yScale = d3
         .scaleLinear()
         .domain([0, d3.max(data, function(d) {return +d.value})])
-        .range([height, 0]);
+        .range([height, margin.top]);
       // 
       var yAxis = d3
         .axisLeft(yScale)
       // add the axis to the svg
       svg
         .append("g")
+        .attr("transform", "translate("+ margin.left +", 0)") // ??
         .call(yAxis);
       // PLOTTING STUFF
       svg

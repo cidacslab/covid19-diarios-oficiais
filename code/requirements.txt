@@ -6,3 +6,4 @@ pandas==0.25.0
 spacy
 pdfminer
 Whoosh
+scikit-learn

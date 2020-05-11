@@ -46,6 +46,13 @@ class Embeddings:
         # score =  (count(word_a, word_b) - delta) / (count(word_a) * count(word_b))
         ##### delta is a minimum frequency that discounts infrequent pairs
         ##### pairs above some score threshold are merged
+
+        # functions to be used
+        ## whoosh.query.Phrase
+        ## matches documents containing the phrase
+        ## result = s.search(q, limit=None) # to get all hits
+        ## len(result) # runs a fast and unscored version of the query to figure out the number of hits
+        ## reading.frequency(<fieldname>, <text>) # the total of instances of the given term in the document
         return 0
 
 # TODO: download a portuguese embedding

@@ -1,11 +1,11 @@
 # State Logs Processing (SLP)
 
-## Setting the Environment
+## Setting a conda  Environment
 
 ```
 conda create -n slp python=3.7
 conda activate slp
-conda install -c conda-forge spacy
+conda install -c conda-forge spacy scikit-learn whoosh
 pip install pdfminer
 
 # installing the portuguese spacy model
@@ -13,7 +13,6 @@ pip install pdfminer
 pip apt_core_news_sm
 python -m spacy download pt_core_news_sm
 ```
-
 
 ## How to test
 
@@ -27,13 +26,10 @@ python code/main.py
 
 You should see stdout with sentences being extracted from a pdf document
 
-
 ## Solutions
 
 pdf solution:
 https://github.com/pdfminer/pdfminer.six
-python.setInterpreter	Select Interpreter
-python.setShebangInterpreter
 
 nlp solution
 https://spacy.io/
@@ -48,13 +44,5 @@ frontend solution
 https://getbootstrap.com/
 
 graph plotting solution
-https://www.chartjs.org/
+http://d3js.org
 
-## TODO:
-
-- check the slides
-- read the doc for word2vec
-- check the second word2vec paper
-
--- create a function to return the max date and min date.
--- this function is going to be needed to plot the graph

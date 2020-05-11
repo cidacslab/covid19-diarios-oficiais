@@ -55,11 +55,13 @@ class Embeddings:
         ## reading.frequency(<fieldname>, <text>) # the total of instances of the given term in the document
         return 0
 
-# TODO: download a portuguese embedding
-obj = Embeddings('data/embeddings/model.emb')
+# these are the pt embeddings generated for scielo
+obj = Embeddings('data/embeddings/pt.vec')
 
 # TODO: transform these into tests
-#print(obj.get_emb('hi'))
-print(obj.get_similarity('hi', 'hello')) # should be 0.415
-print(obj.get_similarity('test', 'test')) # should be 1
-print(obj.get_similarity('fuck', 'jesus')) # should be 0.331
+# comparison assertions
+assert '%.3f'%obj.get_similarity('oi', 'ola') == '0.174'
+assert '%.3f'%obj.get_similarity('teste', 'teste') == '1.000'
+assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
+# checking if the function returns the embedding correctly
+assert obj.get_emb('ola')[0][0] == 0.089899

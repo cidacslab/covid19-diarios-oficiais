@@ -34,11 +34,21 @@ class Embeddings:
         emb2 = self.get_emb(word2)
         return cosine_similarity(emb1, emb2).item(0)
     
-    # TODO: code get_top_k
-    # it is worth noting that cosine_similarity performs a pairwise opearation
-    def get_top_k(self, word):
-        return None
-
+    def get_top_k(self, word, k):
+        # get the embedding for the word
+        emb = self.get_emb(word)
+        # create an object with the format n_samples:n_features
+        vecs_list = list(self.emb.values())
+        vecs_np = np.concatenate((vecs_list), axis=0)
+        # calculate similarity with all other embeddigs
+        similarities = cosine_similarity(emb, vecs_np).reshape(-1)
+        ## zip similarities with words
+        word_similarities = list(zip(self.emb.keys(),similarities))
+        # sort similarities
+        sorted_word_similarities = sorted(word_similarities, key = lambda k: k[1], reverse=True)
+        # return top k
+        return sorted_word_similarities[1:k+1]
+    
     # TODO: generate MWU:
     def generate_mwu(self, whoosh):
         # TODO: put the formula here
@@ -65,3 +75,6 @@ assert '%.3f'%obj.get_similarity('teste', 'teste') == '1.000'
 assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
 # checking if the function returns the embedding correctly
 assert obj.get_emb('ola')[0][0] == 0.089899
+
+## work on the k-most similar
+print(obj.get_top_k('rei', 10))

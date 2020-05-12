@@ -77,8 +77,11 @@ class Embeddings:
         all_words = list(self.emb.keys())
         # filter out words that are not in the dataset
         # this takes a long time to run
-        filtered_words = list(filter(lambda f: search_obj.get_term_freq(f) > 0, all_words))
+        #filtered_words = list(filter(lambda f: search_obj.get_term_freq(f) > 0, all_words))
+        # trying to speed things up with list comprehension
+        filtered_words = [w for w in all_words if search_obj.get_term_freq(w) > 0]
         print(f'generating MWU\n ** filtered vocab size:<{len(filtered_words)}>') 
+        
         # for each word1 in vocab
         for word1 in filtered_words:
             ## for each word2 in vocab
@@ -89,19 +92,11 @@ class Embeddings:
                     # T0D0: add mwu's > threshold to the self.emb
 
 # these are the pt embeddings generated for scielo
-obj = Embeddings('data/embeddings/pt.vec')
-
-# TODO: transform these into tests
-# comparison assertions
-#assert '%.3f'%obj.get_similarity('oi', 'ola') == '0.174'
-#assert '%.3f'%obj.get_similarity('teste', 'teste') == '1.000'
-#assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
-# checking if the function returns the embedding correctly
-#assert obj.get_emb('ola')[0][0] == 0.089899
+#obj = Embeddings('data/embeddings/pt.vec')
 
 ## work on the k-most similar
 # print(obj.get_top_k('coronavirus', 10))
 
 #
-search = Search()
-obj.generate_mwu(search)
+#search = Search()
+#obj.generate_mwu(search)

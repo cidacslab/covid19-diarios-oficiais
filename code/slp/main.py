@@ -14,4 +14,9 @@ search = Search()
 #search.index_document(doc)
 
 # search part
-search.search_term('sempre')
+#search.search_term('sempre')
+
+# test getTermFrequency
+print(search.get_term_freq('sempre'))
+# test getPhraseFrequency
+#search.get_phrase_freq('sempre possuir')

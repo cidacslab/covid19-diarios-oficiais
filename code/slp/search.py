@@ -26,6 +26,7 @@ class Search:
         else:
             print('Loading index...')
             self.index = index.open_dir(index_path)
+    
     # 
     def index_document(self, doc):
         # get the writer
@@ -41,12 +42,13 @@ class Search:
             print('indexed: (state->', doc.state, '), (page->', k+1, '), (date->', doc.date, ')')
             #print('sentence: ', s)
         writer.commit()
-
+    
+    ##
     def search_term(self, term):
         # build the query
         qp = QueryParser('sentence', schema=self.schema)
         query = qp.parse(term)
-
+        # print hits
         with self.index.searcher() as searcher:
             print('Searching term: ', term)
             # this limits the number of matches = 10
@@ -58,8 +60,16 @@ class Search:
                 # page
                 # sentennce
                 # state
-
-                match = Match(hit['page'], hit['state'], hit['sentence'], hit['date'], '<link>', '<id>')
+                match = Match(
+                        hit['page'],
+                        hit['state'],
+                        hit['sentence'],
+                        hit['date'],
+                        '<link>',
+                        '<id>'
+                    )
                 print(match)
-
                 # MAKE VIM RECORD THE LAST PLACE I WHERE
+
+    def get_term_freq(self, term):
+        return 1

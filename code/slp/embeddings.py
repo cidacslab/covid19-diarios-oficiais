@@ -48,9 +48,9 @@ class Embeddings:
         sorted_word_similarities = sorted(word_similarities, key = lambda k: k[1], reverse=True)
         # return top k
         return sorted_word_similarities[1:k+1]
-    
-    # TODO: generate MWU:
-    def generate_mwu(self, whoosh):
+   
+    # TODO: generate mwu
+    def get_mwu_score(self, word1, word2):
         # TODO: put the formula here
         # FORMULA:
         # score =  (count(word_a, word_b) - delta) / (count(word_a) * count(word_b))
@@ -63,6 +63,18 @@ class Embeddings:
         ## result = s.search(q, limit=None) # to get all hits
         ## len(result) # runs a fast and unscored version of the query to figure out the number of hits
         ## reading.frequency(<fieldname>, <text>) # the total of instances of the given term in the document
+        
+        #
+        return 0
+
+    # TODO: generate MWU:
+    def generate_mwu(self, whoosh):
+        # for each word1 in vocab
+        ## for each word2 in vocab
+        ### if word1 != word2:
+        #### score = get_mwu_score
+        #### if score > threshhold
+        ##### generate new mwu with the average of both wb
         return 0
 
 # these are the pt embeddings generated for scielo
@@ -77,4 +89,4 @@ assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
 assert obj.get_emb('ola')[0][0] == 0.089899
 
 ## work on the k-most similar
-print(obj.get_top_k('rei', 10))
+print(obj.get_top_k('coronavirus', 10))

@@ -1,5 +1,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+from search import Search
+
 
 class Embeddings:
     def __init__(self, path):
@@ -49,44 +51,57 @@ class Embeddings:
         # return top k
         return sorted_word_similarities[1:k+1]
    
-    # TODO: generate mwu
-    def get_mwu_score(self, word1, word2):
-        # TODO: put the formula here
-        # FORMULA:
-        # score =  (count(word_a, word_b) - delta) / (count(word_a) * count(word_b))
-        ##### delta is a minimum frequency that discounts infrequent pairs
-        ##### pairs above some score threshold are merged
-
-        # functions to be used
-        ## whoosh.query.Phrase
-        ## matches documents containing the phrase
-        ## result = s.search(q, limit=None) # to get all hits
-        ## len(result) # runs a fast and unscored version of the query to figure out the number of hits
-        ## reading.frequency(<fieldname>, <text>) # the total of instances of the given term in the document
+    def get_mwu_score(self, word1, word2, search_obj):
+        # if the word is the same, no need
+        if word1 == word2:
+            return 0
+        # calculate count(word_a, word_b)
+        count_word1and2 = search_obj.get_phrase_freq(' '.join([word1, word2]))
+        # if there is no ocurrence of these words together, ignore
+        if  count_word1and2 == 0:
+            return 0
         
-        #
-        return 0
+        # here we avoind having 0 in the denominator
+        # calculate count(word1)
+        count_word1 = search_obj.get_term_freq(word1) 
+        if count_word1 == 0:
+            return 0
+        # calculate count(word2)
+        count_word2 = search_obj.get_term_freq(word2) 
+        if count_word2 == 0:
+            return 0
+        # calculate the score
+        return count_word1and2/(count_word1*count_word2)
 
-    # TODO: generate MWU:
-    def generate_mwu(self, whoosh):
+    def generate_mwu(self, search_obj):
+        all_words = list(self.emb.keys())
+        # filter out words that are not in the dataset
+        # this takes a long time to run
+        filtered_words = list(filter(lambda f: search_obj.get_term_freq(f) > 0, all_words))
+        print(f'generating MWU\n ** filtered vocab size:<{len(filtered_words)}>') 
         # for each word1 in vocab
-        ## for each word2 in vocab
-        ### if word1 != word2:
-        #### score = get_mwu_score
-        #### if score > threshhold
-        ##### generate new mwu with the average of both wb
-        return 0
+        for word1 in filtered_words:
+            ## for each word2 in vocab
+            for word2 in filtered_words:
+                score = self.get_mwu_score(word1, word2, search_obj)
+                if score > 0:
+                    print(f'testind word:<{word1}> and word<{word2}>, the score is:<{score}>')
+                    # T0D0: add mwu's > threshold to the self.emb
 
 # these are the pt embeddings generated for scielo
 obj = Embeddings('data/embeddings/pt.vec')
 
 # TODO: transform these into tests
 # comparison assertions
-assert '%.3f'%obj.get_similarity('oi', 'ola') == '0.174'
-assert '%.3f'%obj.get_similarity('teste', 'teste') == '1.000'
-assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
+#assert '%.3f'%obj.get_similarity('oi', 'ola') == '0.174'
+#assert '%.3f'%obj.get_similarity('teste', 'teste') == '1.000'
+#assert '%.3f'%obj.get_similarity('deus', 'jesus') == '0.593'
 # checking if the function returns the embedding correctly
-assert obj.get_emb('ola')[0][0] == 0.089899
+#assert obj.get_emb('ola')[0][0] == 0.089899
 
 ## work on the k-most similar
-print(obj.get_top_k('coronavirus', 10))
+# print(obj.get_top_k('coronavirus', 10))
+
+#
+search = Search()
+obj.generate_mwu(search)

@@ -20,3 +20,4 @@ search = Search()
 assert search.get_term_freq('grafos') == 11.0
 # test getPhraseFrequency
 assert search.get_phrase_freq('problemas clássicos') == 2.0
+

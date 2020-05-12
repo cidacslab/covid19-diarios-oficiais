@@ -5,6 +5,7 @@ from whoosh.fields import Schema, TEXT, ID, STORED, DATETIME
 from whoosh.analysis import StemmingAnalyzer
 from whoosh import index
 from whoosh.qparser import QueryParser
+from whoosh.query import Phrase
 
 import os, os.path
 
@@ -42,7 +43,7 @@ class Search:
             print('indexed: (state->', doc.state, '), (page->', k+1, '), (date->', doc.date, ')')
             #print('sentence: ', s)
         writer.commit()
-    
+   
     ##
     def search_term(self, term):
         # build the query
@@ -72,4 +73,19 @@ class Search:
                 # MAKE VIM RECORD THE LAST PLACE I WHERE
 
     def get_term_freq(self, term):
-        return 1
+        # get the index reader
+        index_reader = self.index.reader()
+        # get the frequency
+        ## reading.frequency(<fieldname>, <text>) 
+        # the total of instances of the given term in the document
+        return index_reader.frequency('sentence', term)
+
+    def get_phrase_freq(self, phrase):
+        # 
+        query = Phrase('sentence', phrase.split())
+        #
+        searcher = self.index.searcher()
+        #
+        hits = searcher.search(query, limit=None)
+        #
+        return float(len(hits))

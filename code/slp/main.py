@@ -17,6 +17,6 @@ search = Search()
 #search.search_term('sempre')
 
 # test getTermFrequency
-print(search.get_term_freq('sempre'))
+assert search.get_term_freq('grafos') == 11.0
 # test getPhraseFrequency
-#search.get_phrase_freq('sempre possuir')
+assert search.get_phrase_freq('problemas clássicos') == 2.0

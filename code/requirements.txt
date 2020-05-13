@@ -7,3 +7,4 @@ spacy
 pdfminer
 Whoosh
 scikit-learn
+flask

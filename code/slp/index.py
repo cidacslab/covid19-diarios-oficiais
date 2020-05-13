@@ -19,7 +19,7 @@ class Index:
     # - - <date.pdf>
     # - - <date.pdf>
     def index_folder(self, root):
-        s = Search()
+        search = Search()
         j = open('w2v.words.txt', 'a+')
         pdfp = PDFProcessor()
         # list files in root
@@ -39,21 +39,17 @@ class Index:
                 # convert pdf to document
                 doc = pdfp.pdf_to_document(path, state, date)
                 # index document
-                s.index_document(doc)
+                search.index_document(doc)
                 # write every sentence to a file
                 # this will be used for w2v
-                for s in doc.getAllSentences():
+                for sent in doc.getAllSentences():
                     # remove double white space
                     # remove edge spaces
                     # make everything lower
-                    s = ' '.join(s.strip().lower().split())
-                    
-                    j.write(s + '\n')
-                    
-                    print(s)
-                    
-                
-                
+                    sent = ' '.join(sent.strip().lower().split())
+                    # write line to embedding file
+                    j.write(sent + '\n')
+        # close embedding file
         j.close()
 
 

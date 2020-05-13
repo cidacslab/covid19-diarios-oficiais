@@ -1,7 +1,9 @@
 <!doctype html>
 
 {% if hits %}
-<h1>{{hits}}</h1>
+{% for hit in hits %}
+<h1>{{hit}}</h4>
+{% endfor %}
 {% else %}
   <h1>No hit</h1>
 {% endif %}

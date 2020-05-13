@@ -5,7 +5,7 @@
 ```
 conda create -n slp python=3.7
 conda activate slp
-conda install -c conda-forge spacy scikit-learn whoosh
+conda install -c conda-forge spacy scikit-learn whoosh flask
 pip install pdfminer
 
 # installing the portuguese spacy model

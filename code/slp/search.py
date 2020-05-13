@@ -51,7 +51,7 @@ class Search:
         query = qp.parse(term)
         # print hits
         with self.index.searcher() as searcher:
-            print('Searching term: ', term)
+            match_list = [] 
             # this limits the number of matches = 10
             results = searcher.search(query)
             print('-- number of hits: ', len(results))
@@ -70,7 +70,9 @@ class Search:
                         '<id>'
                     )
                 print(match)
-                # MAKE VIM RECORD THE LAST PLACE I WHERE
+                match_list.append(match)
+        # return all matches
+        return  match_list
 
     def get_term_freq(self, term):
         # get the index reader

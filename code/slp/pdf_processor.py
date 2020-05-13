@@ -18,7 +18,7 @@ class PDFProcessor:
         # parsej
         doc = nlp(text)
         # return sentences
-        return [str(sent) for sent in list(doc.sents)]
+        return [str(sent) for sent in list(doc.sents) if len(sent) > 5]
         
 
     def pdf_to_document(self, path, state, date):

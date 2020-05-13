@@ -18,7 +18,7 @@ def q(query=None):
         
         hits = search.search_term(query)
 
-    return render_template('index.html', hits=hits)
+    return render_template('index.html', hits=hits, query=query)
 
 
 

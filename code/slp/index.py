@@ -52,6 +52,5 @@ class Index:
         # close embedding file
         j.close()
 
-
 idx = Index()
 idx.index_folder('data/root')

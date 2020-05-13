@@ -23,10 +23,14 @@ def q(query=None):
         # search.index_document(doc)
         
         hits = search.search_term(query)
+        for hit in hits:
+            hit.date = hit.date[:4] + '-' + hit.date[4:6] + '-' + hit.date[6:]
+
+        
         # generate graph
         # group by date
         # print num hits
-        all_dates = [h.date[:4] + '-' + h.date[4:6] + '-' + h.date[6:] for h in hits]
+        all_dates = [h.date for h in hits]
         for date in all_dates:
             if date not in hits_per_date:
                 hits_per_date[date] = 0

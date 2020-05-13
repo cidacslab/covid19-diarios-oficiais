@@ -36,5 +36,4 @@ def q(query=None):
     return render_template('index.html', hits=hits, query=query, graph=hits_per_date)
 
 
-
-# search part
+app.run(host='0.0.0.0')

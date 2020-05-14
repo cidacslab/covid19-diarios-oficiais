@@ -33,7 +33,7 @@ class TestIE(unittest.TestCase):
         self.assertEqual(tt.getNumPages(), 5)
     def test_get_num_sentences(self):
         # this document has 9709 sentences
-        self.assertEqual(tt.getNumSentences(), 172)
+        self.assertEqual(tt.getNumSentences(), 85)
 
 # peparing search
 try: 
@@ -53,7 +53,7 @@ class TestSearch(unittest.TestCase):
         self.assertEqual(search.get_term_freq('grafos'), 11.0)
     def test_get_phrase_freq(self):
         # test getPhraseFrequency
-        self.assertEqual(search.get_phrase_freq('problemas clássicos'), 2.0)
+        self.assertEqual(search.get_phrase_freq('problemas clássicos'), 1.0)
     
 # preparing embedddings
 obj = Embeddings('data/embeddings/pt.vec')

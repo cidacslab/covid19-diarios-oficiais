@@ -1,0 +1,247 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sate Logs Processing (SLP)</title> 
+    <meta name="description" content="state logs processing ( slp )">
+    <meta name="author" content="George C. G. Barbosa">
+    <!-- bootstrap stuff -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" 
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <!-- end bootstrap stuff -->
+    <style>
+      html {
+        position: relative;
+        min-height: 100%;
+      }
+      body {
+        margin-bottom: 60px; /* Margin bottom by footer height */
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px; /* Set the fixed height of the footer here */
+        line-height: 60px; /* Vertically center the text there */
+        background-color: #f5f5f5;
+      }
+      .my-svg-container {
+        display: inline-block;
+        position: relative;
+        width: 50%;
+        padding-bottom: 60%; /* depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
+       vertical-align: middle; /* top | middle | bottom ... do what you want */
+      }
+      .my-svg { /* svg into : object, img or inline */
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; /* only required for <img /> */
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column">
+    <!-- START HEADER -->
+    <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">About</h4>
+              <p class="text-muted">
+                This is a simple system that searchs the 'Diarios Oficiais'
+                of each state of Brazil.
+                Go ahead,
+                type your query and hit enter.
+              </p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+              <li><a href="#" class="text-white">Cidacs</a></li>
+              <li><a href="#" class="text-white">Rede Covid</a></li>
+              <li><a href="#" class="text-white">Follow me</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <svg class="bi bi-paperclip" width="1em" height="1em" 
+                 viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" 
+                    d="M4.5 3a2.5 2.5 0 015 0v9a1.5 1.5 0 01-3 0V5a.5.5 0 011 0v7a.5.5 0 001 0V3a1.5 1.5 0 10-3 0v9a2.5 2.5 0 005 0V5a.5.5 0 011 0v7a3.5 3.5 0 11-7 0V3z" 
+                    clip-rule="evenodd"/>
+            </svg>
+            <strong>SLP</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                  aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <!-- END HEADER --> 
+    <main class="container pb-4">
+      <!-- START SEARCH BAR -->
+      <div class="jumbotron mt-4 p-4 rounded bg-dark text-white">
+        <form class="m-0" id="search-form">
+          <div class="input-group">
+            <input id="search-box" class="form-control form-control-lg bg-dark text-white" 
+                                   type="text" placeholder="search term" value="{% if query %}{{ query }}{% endif %}">
+            <div class="input-group-append">
+              <button id="btn-search" type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </form>
+        <!-- suggestions-->
+        {% if suggestions %}
+        <div class="pt-2">
+
+          <small class="mr-1">restrict search:</small>
+          {% for sgg in suggestions -%}
+          <span class="badge badge-secondary mr-1">{{sgg[0]}}</span>
+          {%- endfor -%}
+        </div>
+        {% endif %}
+        <!-- end suggestions  -->
+      </div>
+      <!-- END SEARCH BAR -->
+      {% if hits %} 
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row no-gutters border rounded overflow-hidden
+                      flex-md-row mb-4 shadow-sm  position-relative">
+            <div class="col d-flex flex-column position-static">
+              <div class="mysvg">
+                <svg class="svg-content-responsive" id="canvas" preserveAspectRatio="xMidYMid meet" viewBox="0 0 800 250"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- START HITS -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="list-group">
+            {% for hit in hits -%}
+            <a class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ hit.date }}</h5>
+                <small>Page: {{ hit.page }}</small>
+              </div>
+              <p class="mb-1">{{ hit.state.upper() }}</p>
+              <small>{{ hit.matched_text[:180] + ' [...]' }}</small>
+            </a>
+            {%- endfor %}
+          </div>
+        </div> <!-- end col-md-12 j-->
+      </div> <!-- end row -->
+      {% endif %} 
+      <!-- END HITS -->
+    </main> <!-- containner -->
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white-50">
+      <div class="text-center">
+        <small>Rede covida -- Cidacs</small>
+      </div>
+    </footer>  
+    <!-- Footer -->
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <!-- END JAVASCRIPT -->
+    <script>
+      $('#search-form').submit(function(){
+        var query = $('#search-box').val()
+        $('#search-form').attr('action', '/' + query);
+      });
+    </script>
+    <script>
+      // set the dimensions and margins of the graph
+      var margin = { top: 30, right: 50, bottom: 20, left: 50},
+        width = 760
+        height = 200;
+      // select the html element to add the attributes
+      var svg = d3.select('#canvas')
+        //.attr("width", width + margin.left + margin.right) 
+        // you have to set at least the width and height?
+        //.attr("height", height + margin.top + margin.bottom )
+        //.attr('viewBox', '0 0 750 240')
+      // load the data
+      var data = [
+        {% for g in graph -%}
+        ['{{g}}', {{graph[g]}}],
+        {%- endfor %}
+      ]
+      
+      data = data.map(function(d) {
+          return { date: d3.timeParse("%Y-%m-%d")(d[0]), value: d[1]};
+      });
+
+      var xScale = d3
+        .scaleTime()
+        .domain(d3.extent(data, function(d) {return d.date}))
+        .range([margin.left, width])
+      var xAxis = d3.axisBottom(xScale)
+        .ticks(10)//width/80)
+        .tickSizeOuter(0) // this removes the outer tick size
+        .tickFormat(d3.timeFormat('%b %d'))
+      // appending it to the svg object
+      svg
+        .append("g")
+        .attr("transform", "translate(0,"+ height +")") // ??
+        .call(xAxis);
+      // adding yAxis 
+      var yScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(data, function(d) {return +d.value})])
+        .range([height, margin.top]);
+      // 
+      var yAxis = d3
+        .axisLeft(yScale)
+      // add the axis to the svg
+      svg
+        .append("g")
+        .attr("transform", "translate("+ margin.left +", 0)") // ??
+        .call(yAxis);
+      
+      // adding xAxis 
+      // PLOTTING STUFF
+      svg
+        .append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr(
+          "d",
+          d3
+            .line()
+            .x(function (d) {
+              return xScale(d.date);
+            })
+            .y(function (d) {
+              return yScale(d.value);
+            })
+        );
+    </script>
+  </body>
+</html>

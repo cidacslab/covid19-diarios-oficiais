@@ -1,11 +1,9 @@
 import shutil
 import sys
-sys.path.append('slp')
 
-
-from pdf_processor import PDFProcessor 
-from search import Search
-from embeddings import Embeddings
+from slp.search import Search
+from slp.pdf_processor import PDFProcessor 
+from slp.embeddings import Embeddings
 
 # see https://github.com/CleanCut/green#unit-test-structure-tutorial
 import unittest

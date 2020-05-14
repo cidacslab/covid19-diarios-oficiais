@@ -3,7 +3,16 @@
 
 ## Goal of the project
 
-## Project layout
+In Brazil,
+certain decisions taken by the government have to be oficially published.
+In most cases this is done daily.
+Cities, States, and the Federal government have to do it.
+They must publish a document called ``official register''.
+Keeping track of the federal official register is hard task.
+To follow all 27 states or even the 5570 cities in Brazil is fairly unfeasible.
+The goal of this project is to develop a system that allows the user 
+to search daily logs of each of the 27 states
+using extraction rules or simple terms.
 
 ## How to run
 

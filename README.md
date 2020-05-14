@@ -1,7 +1,7 @@
 # State Logs Processing (SLP)
 [![Build Status](https://travis-ci.com/cidacslab/covid19-diarios-oficiais.svg?token=4NPdpgkxu7MaGzxEDga4&branch=master)](https://travis-ci.com/cidacslab/covid19-diarios-oficiais)
 
-[image](docs/slp.png)
+![image](docs/slp.png)
 
 ## Goal of the project
 

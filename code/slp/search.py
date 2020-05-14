@@ -1,5 +1,5 @@
-from document import Document
-from match import Match
+from . document import Document
+from . match import Match
 
 from whoosh.fields import Schema, TEXT, ID, STORED, DATETIME
 from whoosh.analysis import StemmingAnalyzer

@@ -6,7 +6,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfdevice import PDFDevice
 
-from document import Document
+from . document import Document
 
 class PDFProcessor:
     #def __init__(self):

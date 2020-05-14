@@ -25,3 +25,5 @@ RUN pip install -U green==3.1.0
 RUN pip install -r requirements.txt
 # spacy model
 RUN python -m spacy download pt_core_news_sm 
+# install SLP itself
+pip insttall -e .

@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from search import Search
+
+from . search import Search
 
 
 class Embeddings:
@@ -39,6 +40,8 @@ class Embeddings:
     def get_top_k(self, word, k):
         # get the embedding for the word
         emb = self.get_emb(word)
+        if emb is None:
+            return None
         # create an object with the format n_samples:n_features
         vecs_list = list(self.emb.values())
         vecs_np = np.concatenate((vecs_list), axis=0)

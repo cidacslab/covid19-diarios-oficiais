@@ -1,5 +1,3 @@
-# State Logs Processing (SLP)
-
 ## Setting a conda  Environment
 
 ```

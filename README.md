@@ -6,3 +6,10 @@
 ## Project layout
 
 ## How to run
+
+Inside `code` type:
+
+```
+sudo docker build -f Dockerfile -t "ling-539/final-project:latest" .
+sudo docker run -it -p 7777:5000 "ling-539/final-project:latest" python application.py
+```

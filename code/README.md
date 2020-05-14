@@ -14,18 +14,6 @@ pip apt_core_news_sm
 python -m spacy download pt_core_news_sm
 ```
 
-## How to test
-
-Right now everything is being developed at `code/main.py`.
-
-To run it simply do:
-
-```
-python code/main.py
-```
-
-You should see stdout with sentences being extracted from a pdf document
-
 ## Solutions
 
 pdf solution:

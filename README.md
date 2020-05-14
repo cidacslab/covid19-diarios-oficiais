@@ -7,9 +7,14 @@
 
 ## How to run
 
-Inside `code` type:
+Navigate to `code` folder and inside it type:
 
 ```
 sudo docker build -f Dockerfile -t "ling-539/final-project:latest" .
 sudo docker run -it -p 7777:5000 "ling-539/final-project:latest" python application.py
 ```
+
+The first command will build the docker image.
+The second will launch a webserver using port `7777`.
+
+Type `http://localhost:7777/` on your Web browser.

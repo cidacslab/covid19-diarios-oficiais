@@ -32,4 +32,4 @@ Type `http://localhost:7777/` on your Web browser.
 
 ### Acknoledgments
 
-This project would not happen without the help of @myedibleenso
+This project would not happen without the help of @[myedibleenso](https://github.com/myedibleenso).

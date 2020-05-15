@@ -14,21 +14,21 @@ python -m spacy download pt_core_news_sm
 
 ## Solutions
 
-pdf solution:
+- pdf:
 https://github.com/pdfminer/pdfminer.six
 
-nlp solution
+- annotations:
 https://spacy.io/
 
-search solution
+- search:
 https://whoosh.readthedocs.io/en/latest/intro.html
 
-backend solution
+- backend:
 https://flask.palletsprojects.com/en/1.1.x/
 
-frontend solution
+- frontend:
 https://getbootstrap.com/
 
-graph plotting solution
+- data viz:
 http://d3js.org
 

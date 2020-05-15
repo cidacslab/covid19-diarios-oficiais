@@ -21,8 +21,8 @@ using extraction rules or simple terms.
 Navigate to `code` folder and inside it type:
 
 ```
-sudo docker build -f Dockerfile -t "ling-539/final-project:latest" .
-sudo docker run -it -p 7777:5000 "ling-539/final-project:latest" python application.py
+sudo docker build -f Dockerfile -t "cidacslab/slp:latest" .
+sudo docker run -it -p 7777:5000 "cidacslab/slp:latest" python application.py
 ```
 
 The first command will build the docker image.

@@ -12,8 +12,8 @@ before_install:
 install:
   # Launch services
   - cd code
-  - docker build -f Dockerfile -t "ling-539/final-project:latest" .
+  - docker build -f Dockerfile -t "cidacslab/slp:latest" .
 script:
   # Run tests
-  - docker run -it "ling-539/final-project:latest" python -m unittest tests/tests.py
+  - docker run -it "cidacslab/slp:latest" python -m unittest tests/tests.py
 

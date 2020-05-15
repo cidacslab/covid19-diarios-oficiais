@@ -30,6 +30,6 @@ The second will launch a webserver using port `7777`.
 
 Type `http://localhost:7777/` on your Web browser.
 
-### Acknoledgments
+### Acknowledgments
 
 This project would not happen without the help of [@myedibleenso](https://github.com/myedibleenso).

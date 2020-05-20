@@ -36,6 +36,6 @@ This project would not happen without the help of [@myedibleenso](https://github
 
 
 
-<img src="docs/covida.svg" width="250"/><img src="docs/clulab.svg" width="250"/>
+<img src="docs/covida.svg" height="100"/><img src="docs/clulab.svg" height="100"/>
 
 

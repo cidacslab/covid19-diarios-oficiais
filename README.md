@@ -3,6 +3,8 @@
 
 ![image](docs/slp.png)
 
+___
+
 ## Goal of the project
 
 In Brazil,
@@ -34,8 +36,7 @@ Type `http://localhost:7777/` on your Web browser.
 
 This project would not happen without the help of [@myedibleenso](https://github.com/myedibleenso).
 
-
-
+___
 <img src="docs/covida.svg" height="100"/><img src="docs/clulab.svg" height="100"/>
 
 

@@ -34,5 +34,5 @@ Type `http://localhost:7777/` on your Web browser.
 
 This project would not happen without the help of [@myedibleenso](https://github.com/myedibleenso).
 
-![](docs/covida.svg)
-![](docs/clulab.svg)
+![](docs/covida.svg | width=100)
+![](docs/clulab.svg | width=100)

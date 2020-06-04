@@ -3,7 +3,7 @@
 
 ![image](docs/slp.png)
 
-___
+______
 
 ## Goal of the project
 

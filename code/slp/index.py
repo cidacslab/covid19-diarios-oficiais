@@ -1,9 +1,10 @@
-from search import Search 
+import os
+import re
+
 from document import Document
 from pdf_processor import PDFProcessor
+from search import Search
 
-import re
-import os
 
 class Index:
     #def __init__(self):

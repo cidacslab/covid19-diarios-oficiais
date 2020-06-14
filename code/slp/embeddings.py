@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
-from . search import Search
+from .search import Search
 
 
 class Embeddings:

@@ -1,12 +1,13 @@
-from pdfminer.pdfparser import PDFParser
-from pdfminer.pdfdocument import PDFDocument
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import TextConverter, PDFPageAggregator
+from pdfminer.converter import PDFPageAggregator, TextConverter
 from pdfminer.layout import LAParams
-from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfdevice import PDFDevice
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
+from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
+from pdfminer.pdfparser import PDFParser
 
-from . document import Document
+from .document import Document
+
 
 class PDFProcessor:
     #def __init__(self):
@@ -65,4 +66,3 @@ class PDFProcessor:
             
             # returning the document obj
             return document_obj
-

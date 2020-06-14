@@ -1,13 +1,15 @@
-from . document import Document
-from . match import Match
+import os
+import os.path
 
-from whoosh.fields import Schema, TEXT, ID, STORED, DATETIME
-from whoosh.analysis import StemmingAnalyzer
 from whoosh import index
+from whoosh.analysis import StemmingAnalyzer
+from whoosh.fields import DATETIME, ID, STORED, TEXT, Schema
 from whoosh.qparser import QueryParser
 from whoosh.query import Phrase
 
-import os, os.path
+from .document import Document
+from .match import Match
+
 
 class Search:
     def __init__(self, index_path='default'):

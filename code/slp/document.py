@@ -1,5 +1,3 @@
-
-
 class Document:
     def __init__(self, state=None, date=None):
         self.pages = 0
@@ -32,5 +30,3 @@ class Document:
     def getNumSentences(self):
         # TODO: do a proper job here
         return len(self.getAllSentences())
-
-

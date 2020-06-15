@@ -7,8 +7,8 @@ from whoosh.fields import DATETIME, ID, STORED, TEXT, Schema
 from whoosh.qparser import QueryParser
 from whoosh.query import Phrase
 
-from .document import Document
-from .match import Match
+from document import Document
+from match import Match
 
 
 class Search:
@@ -18,6 +18,8 @@ class Search:
                 state=ID(stored=True),
                 date=DATETIME(stored=True),
                 page=ID(stored=True),
+                # TODO: add the id
+                # TODO: add decreto/outras coisas?
                 sentence=TEXT(stored=True)
             )
         

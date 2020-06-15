@@ -6,7 +6,7 @@ from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfparser import PDFParser
 
-from .document import Document
+from document import Document
 
 
 class PDFProcessor:

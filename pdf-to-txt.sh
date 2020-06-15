@@ -14,7 +14,6 @@ echo "Printing list of states"
 for state in $(ls -d $folder*); do
   echo "Found state $state"
   for file_address in $(ls $state/*.pdf); do
-    # TODO: get the file address
     # IFS is the delimiter
     # r is for raw
     # a for read to an array
@@ -26,7 +25,6 @@ for state in $(ls -d $folder*); do
     # create a folder to house the file
     folder_name=${file_name::-4}
     echo "The folder name will be $folder_name"
-    # TODO: sss
     # mkdir new folder
     new_folder=$file_address$folder_name
     mkdir $new_folder

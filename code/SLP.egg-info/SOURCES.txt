@@ -12,5 +12,4 @@ slp/match.py
 slp/pdf_processor.py
 slp/search.py
 tests/__init__.py
-tests/__main__.py
 tests/tests.py

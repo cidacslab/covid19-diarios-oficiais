@@ -9,6 +9,11 @@ class Document:
         self.pages = []
     
     def addPage(self, sentences):
+        # detect decree
+        # get last page
+        # scan the sentences backwards trying to find the decree number
+        # after finding foreach the sentences,
+        # updating the decree number accordingly
         self.pages.append(sentences)
         return 0
 

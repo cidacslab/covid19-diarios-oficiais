@@ -7,9 +7,9 @@ from search import Search
 
 
 class Index:
-    #def __init__(self):
-        #print('fill me')
-    
+    # def __init__(self):
+    #print('fill me')
+
     # define the expected format
     # root
     # - state1
@@ -30,7 +30,7 @@ class Index:
         for state in states:
             #   grab the name of the folder
             #   list the files in folder
-            files = os.listdir( root + '/' + state)
+            files = os.listdir(root + '/' + state)
             pdf_files = [f for f in files if f[-4:] == '.pdf']
             for pdf_file in pdf_files:
                 # process the pdf file
@@ -53,6 +53,23 @@ class Index:
         # close embedding file
         j.close()
 
+    def detect_decree(self, sentence):
+        sentence = sentence.replace('\n', '').lower()
+        # keywords we are looking for
+        keywords = ['portaria nº', 'sei nº', 'decreto nº']
+        # 
+        for word in keywords:
+            # if found the keyword
+            if word in sentence:
+                sentence_words = sentence.split(' ')
+                for i, s_word in enumerate(sentence_words):
+                    if i+2 < len(sentence_words) and word.split(' ')[0] == sentence_words[i]:
+                        if sentence_words[i+1].lower() == 'nº':
+                            if sentence_words[i+2]:
+                                decree = ' '.join(sentence_words[i: i+3])
+                                if decree[-1] in [',', '.']:
+                                    return decree[:-1]
+                                return decree
     def index_folder_txt(self, root):
         states = os.listdir(root)
         # TODO: pdfp = PDFProcessor()
@@ -60,33 +77,48 @@ class Index:
         search = Search()
         for state in states:
             # TODO: list all directories
-            all_files = os.listdir( root + '/' + state)
-            #  
+            all_files = os.listdir(root + '/' + state)
+            #
             pdf_files = [f for f in all_files if f[-4:] == '.pdf']
             # remove all extentions
-            folders_txt = [root+'/'+f[:-4] for f in pdf_files]
-
+            folders_txt = [root+'/'+state+'/'+f[:-4] for f in pdf_files]
             print(folders_txt)
             for folder in folders_txt:
+                # date formate YYYY-MM-DD
+                date = folder[-10:]
                 files = os.listdir(folder)
-                txt_files = [f for f in files if f[-4:] == '.txt' and f.find('-') == -1]
-                print(txt_files)
+                txt_files = [f for f in files if f[-4:] == '.txt']
+                for txt in txt_files:
+                    no_extension = txt[:-4]
+                    page = no_extension.split('-')[-1]
+                    txt_file = open(folder+'/'+txt)
+
+                    last_decree = ''
+                    for line in txt_file:
+                        decree = self.detect_decree(line)
+                        if decree:
+                            last_decree = decree
+                        # index stuff
+                        print(f"processing state: <{state}>, page: <{page}>")
+                        search.index_elements(state, page, date, line, last_decree)
+
+                    txt_file.close()
+                    # for each line in the file
+                    # open file
                 # TODO: write a function to convert txt to doc
-                # rename 
-
-
-            #files = os.listdir( root + '/' + state)
-            #print(files)
-            ## 
-            #txt_files = [f for f in files if f[-4:] == '.txt']
-            #print(txt_files)
-            #for txt in txt_files:
-            #    date = pdf_file[:8]
-            #    print(date)
-
+                # TODO: find all those guys
+                # [x] state,
+                # [x] page,
+                # [x] date,
+                # [x] sentence,
+                # [x] decree
+                # list of keywords for decrees
+                # portaria nº
+                # sei nº
+                # decreto nº
 
 
 idx = Index()
-idx.index_folder_txt('/home/gcgbarbosa/repos/covid19-diarios-oficiais/toy-data/covid19')
-# idx.index_folder('data/root')
+idx.index_folder_txt(
+    '/home/gcgbarbosa/repos/covid19-diarios-oficiais/toy-data/covid19')
 # idx.index_folder('data/root')

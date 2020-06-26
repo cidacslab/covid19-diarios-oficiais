@@ -85,13 +85,14 @@ class Index:
             # remove all extentions
             folders_txt = [root+'/'+state+'/'+f[:-4] for f in pdf_files]
             # print(folders_txt)
-            cached_files = 0
             for folder in folders_txt:
+                # TODO: proccess the files in order to keep the decree from the previous page
                 # date formate YYYY-MM-DD
                 date = folder[-10:]
                 date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
                 files = os.listdir(folder)
                 txt_files = [f for f in files if f[-4:] == '.txt']
+                last_decree = ''
                 for txt in txt_files:
                     no_extension = txt[:-4]
                     # ignore the complete file
@@ -100,27 +101,24 @@ class Index:
                     page = no_extension.split('-')[-1]
                     txt_file = open(folder+'/'+txt)
                     #
-                    last_decree = ''
-                    #
                     for line in txt_file:
-                        commit = False
+                        # skip small lines
+                        if len(line.split(' ')) <= 5:
+                            continue
                         decree = self.detect_decree(line)
                         if decree:
                             last_decree = decree
-                        # index stuff
-                        print(
-                            f"processing state: <{state}>, date:<{date}>, page: <{page}>")
-                        cached_files = cached_files + 1
                         # controll commits
-                        if(cached_files > 1000000):
-                            commit = True
-                            cached_files = 0
-                        print(
-                            f"state={state}, page={page}, date={date}, line, last_decree={last_decree}")
                         search.index_elements(
-                            state, page, date_obj, line, last_decree, commit)
+                            state, page, date_obj, line, last_decree)
+                        print(
+                            f"state={state}, page={page}, date={date}, last_decree={last_decree}, sentence=<{line}>")
 
                     txt_file.close()
+        # commit indexing
+        print('commiting changes...')
+        search.commit_indexing()
+
 
 
 idx = Index()

@@ -34,7 +34,7 @@ class Search:
             print('Loading index...')
             self.index = index.open_dir(index_path)
 
-        self.writer = self.index.writer(procs=6, limitmb=2048)
+        self.writer = self.index.writer(procs=6, limitmb=1024)
     #
     def index_document(self, doc):
         # write document
@@ -60,15 +60,10 @@ class Search:
             sentence=sentence,
             decree=decree
         )
-        #print('sentence: ', s)
-        if commit:
-            self.writer.commit()
-            w = self.index.writer(procs=6, limitmb=2048)
-            # reset cachesize
-            stem_ann = w.schema['state'].format.analyzer
-            stem_ann.cachesize = -1
-            stem_ann.clear()
-            self.writer = w
+
+    def commit_indexing(self):
+        self.writer.commit()
+        self.writer = self.index.writer(procs=6, limitmb=1024)
 
     def search_term(self, term):
         # build the query

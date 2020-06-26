@@ -2,7 +2,6 @@ import shutil
 import sys
 
 from slp.search import Search
-from slp.pdf_processor import PDFProcessor 
 from slp.embeddings import Embeddings
 
 # see https://github.com/CleanCut/green#unit-test-structure-tutorial

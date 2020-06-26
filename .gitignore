@@ -1,4 +1,5 @@
 *.pyc
 full-data/
+toy-data/
 *.swp
 code/default

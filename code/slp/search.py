@@ -31,13 +31,12 @@ class Search:
             print('Loading index...')
             self.index = index.open_dir(index_path)
 
+        self.writer = self.index.writer(procs=6, limitmb=2048)
     #
     def index_document(self, doc):
-        # get the writer
-        writer = self.index.writer()
         # write document
         for k, s in enumerate(doc.pages):
-            writer.add_document(
+            self.writer.add_document(
                 state=doc.state,
                 page=str(k+1),
                 date=doc.date,
@@ -46,14 +45,12 @@ class Search:
             print('indexed: (state->', doc.state, '), (page->',
                   k+1, '), (date->', doc.date, ')')
             #print('sentence: ', s)
-        writer.commit()
+        self.writer.commit()
 
     #
-    def index_elements(self, state, page, date, sentence, decree):
-        # get the writer
-        writer = self.index.writer()
+    def index_elements(self, state, page, date, sentence, decree, commit=True):
         # write document
-        writer.add_document(
+        self.writer.add_document(
             state=state,
             page=page,
             date=date,
@@ -61,7 +58,14 @@ class Search:
             decree=decree
         )
         #print('sentence: ', s)
-        writer.commit()
+        if commit:
+            self.writer.commit()
+            w = self.index.writer(procs=6, limitmb=2048)
+            # reset cachesize
+            stem_ann = w.schema['content'].format.analyzer
+            stem_ann.cachesize = -1
+            stem_ann.clear()
+            self.writer = w
 
     def search_term(self, term):
         # build the query

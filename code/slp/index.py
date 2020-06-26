@@ -5,7 +5,6 @@ from document import Document
 from pdf_processor import PDFProcessor
 from search import Search
 
-
 class Index:
     # def __init__(self):
     #print('fill me')
@@ -82,7 +81,8 @@ class Index:
             pdf_files = [f for f in all_files if f[-4:] == '.pdf']
             # remove all extentions
             folders_txt = [root+'/'+state+'/'+f[:-4] for f in pdf_files]
-            print(folders_txt)
+            #print(folders_txt)
+            cached_files = 0
             for folder in folders_txt:
                 # date formate YYYY-MM-DD
                 date = folder[-10:]
@@ -90,33 +90,29 @@ class Index:
                 txt_files = [f for f in files if f[-4:] == '.txt']
                 for txt in txt_files:
                     no_extension = txt[:-4]
+                    # ignore the complete file
+                    if len(no_extension.split('-')) <= 3:
+                        continue
                     page = no_extension.split('-')[-1]
                     txt_file = open(folder+'/'+txt)
-
+                    #
                     last_decree = ''
+                    #
                     for line in txt_file:
+                        commit = False
                         decree = self.detect_decree(line)
                         if decree:
                             last_decree = decree
                         # index stuff
-                        print(f"processing state: <{state}>, page: <{page}>")
-                        search.index_elements(state, page, date, line, last_decree)
-
+                        print(f"processing state: <{state}>, date:<{date}>, page: <{page}>")
+                        cached_files = cached_files + 1
+                        # controll commits
+                        if(cached_files > 1000000):
+                            commit = True
+                            cached_files = 0
+                        search.index_elements(state, page, date, line, last_decree, commit)
+                    
                     txt_file.close()
-                    # for each line in the file
-                    # open file
-                # TODO: write a function to convert txt to doc
-                # TODO: find all those guys
-                # [x] state,
-                # [x] page,
-                # [x] date,
-                # [x] sentence,
-                # [x] decree
-                # list of keywords for decrees
-                # portaria nº
-                # sei nº
-                # decreto nº
-
 
 idx = Index()
 idx.index_folder_txt(

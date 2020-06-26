@@ -73,7 +73,7 @@ class Search:
         with self.index.searcher() as searcher:
             match_list = []
             # this limits the number of matches = 10
-            results = searcher.search(query)
+            results = searcher.search(query, limit=None)
             print('-- number of hits: ', len(results))
             for hit in results:
                 # hit has:
@@ -92,6 +92,7 @@ class Search:
                 )
                 print(match)
                 match_list.append(match)
+            print('-- result-size: ', len(match_list))
         # return all matches
         return match_list
 

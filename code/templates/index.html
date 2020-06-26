@@ -137,6 +137,10 @@
                 <small>Page: {{ hit.page }}</small>
               </div>
               <p class="mb-1">{{ hit.state.upper() }}</p>
+              {% if hit.decree %}
+              <p class="mb-1">{{ hit.decree }}</p>
+              {% endif %}
+              <p class="mb-1">{{ hit.link}}</p>
               <small>{{ hit.matched_text[:180] + ' [...]' }}</small>
             </a>
             {%- endfor %}

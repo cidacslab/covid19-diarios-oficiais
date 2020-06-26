@@ -6,54 +6,7 @@ from document import Document
 from pdf_processor import PDFProcessor
 from search import Search
 
-
 class Index:
-    # def __init__(self):
-    #print('fill me')
-
-    # define the expected format
-    # root
-    # - state1
-    # - - <date.pdf>
-    # - - <date.pdf>
-    # - - <date.pdf>
-    # - state2
-    # - - <date.pdf>
-    # - - <date.pdf>
-    def index_folder(self, root):
-        search = Search()
-        j = open('w2v.words.txt', 'a+')
-        pdfp = PDFProcessor()
-        # list files in root
-        states = os.listdir(root)
-        # TODO: filter off non folders
-        # for each folder
-        for state in states:
-            #   grab the name of the folder
-            #   list the files in folder
-            files = os.listdir(root + '/' + state)
-            pdf_files = [f for f in files if f[-4:] == '.pdf']
-            for pdf_file in pdf_files:
-                # process the pdf file
-                date = pdf_file[:8]
-                path = root + '/' + state + '/' + pdf_file
-                print(f'indexing document <{path}>')
-                # convert pdf to document
-                doc = pdfp.pdf_to_document(path, state, date)
-                # index document
-                search.index_document(doc)
-                # write every sentence to a file
-                # this will be used for w2v
-                for sent in doc.getAllSentences():
-                    # remove double white space
-                    # remove edge spaces
-                    # make everything lower
-                    sent = ' '.join(sent.strip().lower().split())
-                    # write line to embedding file
-                    j.write(sent + '\n')
-        # close embedding file
-        j.close()
-
     def detect_decree(self, sentence):
         sentence = sentence.replace('\n', '').lower()
         # keywords we are looking for
@@ -72,13 +25,22 @@ class Index:
                                     return decree[:-1]
                                 return decree
 
+    # define the expected format
+    # root
+    # - state1
+    # - - <date.pdf>
+    # - - <date.pdf>
+    # - - <date.pdf>
+    # - state2
+    # - - <date.pdf>
+    # - - <date.pdf>
     def index_folder_txt(self, root):
+        # list the first level
         states = os.listdir(root)
-        # TODO: pdfp = PDFProcessor()
-        # pdf processor should be renamed to file processor bc now it processes two different things.
+        # declare search object to index stuff
+        # TODO search should be renamed to search_engine or something
         search = Search()
         for state in states:
-            # TODO: list all directories
             all_files = os.listdir(root + '/' + state)
             #
             pdf_files = [f for f in all_files if f[-4:] == '.pdf']
@@ -118,8 +80,6 @@ class Index:
         # commit indexing
         print('commiting changes...')
         search.commit_indexing()
-
-
 
 idx = Index()
 idx.index_folder_txt(

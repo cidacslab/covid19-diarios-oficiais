@@ -35,22 +35,8 @@ class Search:
             self.index = index.open_dir(index_path)
 
         self.writer = self.index.writer(procs=6, limitmb=1024)
-    #
-    def index_document(self, doc):
-        # write document
-        for k, s in enumerate(doc.pages):
-            self.writer.add_document(
-                state=doc.state,
-                page=str(k+1),
-                date=doc.date,
-                sentence=' '.join(s)
-            )
-            print('indexed: (state->', doc.state, '), (page->',
-                  k+1, '), (date->', doc.date, ')')
-            #print('sentence: ', s)
-        self.writer.commit()
-
-    #
+    
+    ## 
     def index_elements(self, state, page, date, sentence, decree, commit=True):
         # write document
         self.writer.add_document(

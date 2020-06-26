@@ -1,11 +1,12 @@
 class Match:
-    def __init__(self, page, state, matched_text, date, document_link, document_id):
+    def __init__(self, page, state, matched_text, date, document_link, document_id, decree):
         self.page = page
         self.state = state
         self.date = date
         self.matched_text = matched_text
         self.document_id = document_id
         self.document_link = document_link
+        self.decree = decree
 
     def __str__(self):
         return 'state:<{state}>\ndate:<{date}>,\npage:<{page}>,\ndocument_id:<{document_id}>,\ndocument_link:<{document_link}>,\nsentence:<{sentence}>' \

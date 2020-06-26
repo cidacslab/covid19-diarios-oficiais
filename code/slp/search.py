@@ -1,5 +1,8 @@
 import os
 import os.path
+import sys
+
+sys.path.append('slp')
 
 from whoosh import index
 from whoosh.analysis import StemmingAnalyzer
@@ -62,7 +65,7 @@ class Search:
             self.writer.commit()
             w = self.index.writer(procs=6, limitmb=2048)
             # reset cachesize
-            stem_ann = w.schema['content'].format.analyzer
+            stem_ann = w.schema['state'].format.analyzer
             stem_ann.cachesize = -1
             stem_ann.clear()
             self.writer = w
@@ -89,7 +92,8 @@ class Search:
                     hit['sentence'],
                     hit['date'],
                     '<link>',
-                    '<id>'
+                    '<id>',
+                    hit['decree']
                 )
                 print(match)
                 match_list.append(match)

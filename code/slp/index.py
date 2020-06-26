@@ -1,9 +1,11 @@
 import os
 import re
+import datetime
 
 from document import Document
 from pdf_processor import PDFProcessor
 from search import Search
+
 
 class Index:
     # def __init__(self):
@@ -56,7 +58,7 @@ class Index:
         sentence = sentence.replace('\n', '').lower()
         # keywords we are looking for
         keywords = ['portaria nº', 'sei nº', 'decreto nº']
-        # 
+        #
         for word in keywords:
             # if found the keyword
             if word in sentence:
@@ -69,6 +71,7 @@ class Index:
                                 if decree[-1] in [',', '.']:
                                     return decree[:-1]
                                 return decree
+
     def index_folder_txt(self, root):
         states = os.listdir(root)
         # TODO: pdfp = PDFProcessor()
@@ -81,11 +84,12 @@ class Index:
             pdf_files = [f for f in all_files if f[-4:] == '.pdf']
             # remove all extentions
             folders_txt = [root+'/'+state+'/'+f[:-4] for f in pdf_files]
-            #print(folders_txt)
+            # print(folders_txt)
             cached_files = 0
             for folder in folders_txt:
                 # date formate YYYY-MM-DD
                 date = folder[-10:]
+                date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
                 files = os.listdir(folder)
                 txt_files = [f for f in files if f[-4:] == '.txt']
                 for txt in txt_files:
@@ -104,15 +108,20 @@ class Index:
                         if decree:
                             last_decree = decree
                         # index stuff
-                        print(f"processing state: <{state}>, date:<{date}>, page: <{page}>")
+                        print(
+                            f"processing state: <{state}>, date:<{date}>, page: <{page}>")
                         cached_files = cached_files + 1
                         # controll commits
                         if(cached_files > 1000000):
                             commit = True
                             cached_files = 0
-                        search.index_elements(state, page, date, line, last_decree, commit)
-                    
+                        print(
+                            f"state={state}, page={page}, date={date}, line, last_decree={last_decree}")
+                        search.index_elements(
+                            state, page, date_obj, line, last_decree, commit)
+
                     txt_file.close()
+
 
 idx = Index()
 idx.index_folder_txt(

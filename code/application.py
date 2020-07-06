@@ -18,7 +18,7 @@ def q(query=None):
     suggestions = None
     hits = None
     base = datetime.datetime.today()
-    num_days = 180
+    num_days = 200
     hits_per_date = {(base - datetime.timedelta(days=x)
                       ).strftime('%Y-%m-%d'): 0 for x in range(num_days)}
     if query:
@@ -36,6 +36,10 @@ def q(query=None):
                 hits_per_date[date] = 0
             hits_per_date[date] = hits_per_date[date] + 1
 
-    return render_template('index.html', hits=hits[:20], query=query, graph=hits_per_date, suggestions=suggestions)
+    # limit the number of hits
+    if hits:
+        hits = hits[:20]
+
+    return render_template('index.html', hits=hits, query=query, graph=hits_per_date, suggestions=suggestions)
 
 app.run(host='0.0.0.0')
